@@ -89,10 +89,12 @@ const mapTables = (tables, cfg) => {
 
 const processConfig = (cfg) => {
     return {
+        /*
         user: {
             tablename: cfg.user.tablename,
             config: mapField(cfg.user.config)
         },
+        */
         tables: mapTables(cfg.tables, cfg),
         procedures: mapProcedures(cfg.procedures)
     }

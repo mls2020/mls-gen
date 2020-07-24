@@ -19,10 +19,6 @@ version: 1.0.0
 template: 'https://github.com/mls2020/generator-mysql-ts.git'
 plugins:
   - mysql
-user:
-  tablename: user
-  config:
-    ssn: string
 tables:
   book: 
     columns:
