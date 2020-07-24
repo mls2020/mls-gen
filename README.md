@@ -1,5 +1,10 @@
 # mls-gen
-code generator
+_code generator_
+
+[![npm version](https://img.shields.io/npm/v/mlsgen.svg?style=flat)](https://www.npmjs.com/package/redux-helper) [![build](https://travis-ci.org/vgmr/mlsgen.svg)](https://travis-ci.org/vgmr/redux-helper) 
+
+[![dependency](https://david-dm.org/vgmr/mlsgen/status.svg)](https://david-dm.org/vgmr/redux-helper) [![devDep](https://david-dm.org/vgmr/mlsgen/dev-status.svg)](https://david-dm.org/vgmr/redux-helper?type=dev)
+
 
 # available templates
 - https://github.com/mls2020/generator-pasv9
