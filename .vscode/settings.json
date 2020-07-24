@@ -1,0 +1,22 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#809d3e",
+        "activityBar.activeBorder": "#bad7e4",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#bad7e4",
+        "activityBarBadge.foreground": "#15202b",
+        "titleBar.activeBackground": "#627930",
+        "titleBar.inactiveBackground": "#62793099",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveForeground": "#e7e7e799",
+        "statusBar.background": "#627930",
+        "statusBarItem.hoverBackground": "#809d3e",
+        "statusBar.foreground": "#e7e7e7",
+        "activityBar.activeBackground": "#809d3e",
+        "statusBar.border": "#627930",
+        "titleBar.border": "#627930"
+    },
+    "peacock.color": "#627930"
+}

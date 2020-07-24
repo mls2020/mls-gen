@@ -1,0 +1,143 @@
+name: shlist
+version: 1.1.116
+template: 'https://github.com/mls2020/generator-mysql-ts.git'
+plugins:
+  - mysql
+user:
+  tablename: user
+  config:
+    site_id: number
+tables:
+  basket:
+    columns:
+      id: 'number autoincrement primary notnull'
+      name: 'string notnull'
+      site_id: 'number notnull'
+  item:
+    columns:
+      id: 'number autoincrement primary notnull'
+      basket_id: 'number notnull'
+      note_id: number
+      product_id: 'number notnull'
+      checked: 'boolean notnull'
+  note:
+    columns:
+      id: 'number autoincrement primary notnull'
+      counter: 'number notnull'
+      description: 'string notnull'
+      product_id: 'number notnull'
+  product:
+    columns:
+      id: 'number autoincrement primary notnull'
+      name: 'string notnull'
+      sector_id: 'number notnull'
+      site_id: 'number notnull'
+    join:
+      sector:
+        fields: name
+        fk: sector_id
+    sort: name
+  sector:
+    columns:
+      id: 'number autoincrement primary notnull'
+      name: 'string notnull'
+      site_id: 'number notnull'
+    join:
+      site:
+        table: site
+        fields: name
+        fk: site_id
+    sort: name
+  site:
+    columns:
+      id: 'number autoincrement primary notnull'
+      name: 'string notnull'
+      current_basekt_id: number
+procedures:
+  list_items:
+    parameters:
+      site_id: number
+    columns:
+      id: 'number autoincrement primary notnull'
+      basket_id: 'number notnull'
+      note_id: number
+      product_id: 'number notnull'
+      checked: 'number notnull'
+      product_name: string
+      sector_name: string
+      note_description: string
+  clear_list:
+    parameters:
+      site_id: number
+    columns:
+      id: 'number autoincrement primary notnull'
+      basket_id: 'number notnull'
+      note_id: number
+      product_id: 'number notnull'
+      checked: 'number notnull'
+      product_name: string
+      sector_name: string
+      note_description: string
+  list_products:
+    parameters:
+      site_id: number
+    columns:
+      id: number
+      name: string
+      sector_id: number
+      sector_name: string
+      is_in_current_basket: boolean
+      item_id: number
+      site_id: number
+  get_product:
+    parameters:
+      product_id: number
+    columns:
+      id: number
+      name: string
+      sector_id: number
+      sector_name: string
+      is_in_current_basket: boolean
+      item_id: number
+      site_id: number
+  save_product:
+    parameters:
+      id: number
+      name: string
+      sector_id: number
+      sector_name: string
+      site_id: number
+    columns:
+      id: number
+      name: string
+      sector_id: number
+      sector_name: string
+      is_in_current_basket: boolean
+      item_id: number
+      site_id: number
+  toggle_product:
+    parameters:
+      product_id: number
+    columns:
+      id: number
+      name: string
+      sector_id: number
+      sector_name: string
+      is_in_current_basket: boolean
+      item_id: number
+      site_id: number
+  save_note:
+    parameters:
+      item_id: number
+      product_id: number
+      note_id: number
+      note_description: string
+    columns:
+      id: 'number autoincrement primary notnull'
+      basket_id: 'number notnull'
+      note_id: number
+      product_id: 'number notnull'
+      checked: 'number notnull'
+      product_name: string
+      sector_name: string
+      note_description: string
