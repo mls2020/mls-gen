@@ -7,7 +7,7 @@
   ],
   "main": "src/index.js",
   "bin": {
-    "mlsgen": "src/index.js.js"
+    "mlsgen": "src/index.js"
   },
   "keywords": [],
   "author": "",
