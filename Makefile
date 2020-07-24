@@ -11,7 +11,6 @@ NOCOLOR="\033[0m\033[K"
 ## 
 ## Generic utilites
 ## 
-
 help: ## Display enhanced help message
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-15s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
@@ -30,6 +29,5 @@ publish: ## publish to npm
 ##
 ## Test
 ##
-
 test-demo: ## generate the demo schema
 	node src/index -s ./test/demo/schema.yaml -o ./test/demo/output/

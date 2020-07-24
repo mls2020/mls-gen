@@ -39,8 +39,8 @@ In this example we are using the __generator-mysql-ts__ template which will crea
 ## Generate Code
 ```bash
 ## Install globally mls-gen
-npm i -g mls-gen
+npm i -g mlsgen
 
 ## Generate code
-mls-gen -s ./schema.yaml -o output 
+mlsgen -s ./schema.yaml -o output 
 ```

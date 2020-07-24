@@ -1,6 +1,6 @@
 {
-  "name": "mls-gen",
-  "version": "1.0.0",
+  "name": "mlsgen",
+  "version": "2.0.0",
   "description": "Code generator",
   "files": [
     "src"
