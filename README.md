@@ -36,7 +36,7 @@ in this example we are using the [https://github.com/mls2020/generator-pasv9] te
 - a user table
 - a get_book_by_id stored procedure
 
-## generate Code
+## code generation
 ```bash
 ## install globally mls-gen
 npm i -g mls-gen
