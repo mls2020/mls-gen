@@ -46,7 +46,10 @@ proc.execSync(`git clone ${template} ${templateDir}`, {
 createCode(output, context, templateDir);
 
 console.info(`Code generated for ${name}`);
-fs.rmdirSync(templateDir, { recursive: true });
+proc.execSync(`rm -rf ${templateDir}`, {
+  cwd: output,
+  stdio: 'inherit'
+})
 fs.unlinkSync(jsSchema);
 
 process.exit(0);
