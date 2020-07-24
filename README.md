@@ -31,16 +31,16 @@ procedures:
       id: autoincrement primary number notnull
       title: notnull string
 ```
-In this example we are using the __generator-mysql-ts__ template which will create a typescript application (web api, rest client and redux client) that will map its api to a mysql database that have:
+in this example we are using the __generator-mysql-ts__ template which will create a typescript application (web api, rest client and redux client) that will map its api to a mysql database that have:
 - a book table
 - a user table
 - a get_book_by_id stored procedure
 
-## Generate Code
+## generate Code
 ```bash
-## Install globally mls-gen
+## install globally mls-gen
 npm i -g mls-gen
 
-## Generate code
+## generate code
 mls-gen -s ./schema.yaml -o output 
 ```
