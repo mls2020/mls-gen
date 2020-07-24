@@ -1,6 +1,7 @@
 name: shlist
-version: 1.1.116
-template: 'https://github.com/mls2020/generator-mysql-ts.git'
+version: 1.1.118
+_template: 'https://github.com/mls2020/generator-mysql-ts.git'
+template: /Users/simonemulas/code/mls2020/generator-mysql-ts
 plugins:
   - mysql
 user:

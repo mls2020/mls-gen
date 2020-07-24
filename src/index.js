@@ -7,7 +7,7 @@ const fs = require('fs');
 const proc = require('child_process');
 const path = require('path');
 const ver = require('../package.json').version;
-
+const copydir = require('copy-dir');
 program
   .version(ver)
   .option('-s, --schema <schema>', 'db schema yaml file')
@@ -35,11 +35,16 @@ context = require(jsSchema);
 
 // Load Templates
 const templateDir = path.join(output, './___mlsgen-template');
-
-proc.execSync(`git clone ${template} ${templateDir}`, {
-  cwd: output,
-  stdio: 'inherit'
-})
+if (template.toLowerCase().startsWith('http://') || template.toLowerCase().startsWith('https://')) {
+  console.log('clone template from '+ templateDir)
+  proc.execSync(`git clone ${template} ${templateDir}`, {
+    cwd: output,
+    stdio: 'inherit'
+  })
+} else {
+  console.log('copy template from '+ templateDir)
+  copydir.sync(template, templateDir);
+}
 
 createCode(output, context, templateDir);
 
