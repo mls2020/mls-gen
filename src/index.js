@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { createCode, createDir } = require('./utils/misc');
+const { createCode, createDir, removeDir } = require('./utils/misc');
 const transformConfig = require('./utils/transformConfig');
 const program = require('commander');
 const fs = require('fs');
@@ -25,9 +25,7 @@ if (!schema || !output) {
 console.info(`Processing ${schema} to ${output}`);
 
 // Creating target dir
-if (fs.existsSync(output)) {
-  fs.rmdirSync(output, { recursive: true });
-}
+removeDir(output);
 createDir(output);
 
 // Create js Schema
@@ -36,7 +34,7 @@ const { name, template } = transformConfig(schema, jsSchema);
 context = require(jsSchema);
 
 // Load Templates
-const templateDir = path.join(output, './___mlsgen-gemplate');
+const templateDir = path.join(output, './___mlsgen-template');
 
 proc.execSync(`git clone ${template} ${templateDir}`, {
   cwd: output,
@@ -46,10 +44,7 @@ proc.execSync(`git clone ${template} ${templateDir}`, {
 createCode(output, context, templateDir);
 
 console.info(`Code generated for ${name}`);
-proc.execSync(`rm -rf ${templateDir}`, {
-  cwd: output,
-  stdio: 'inherit'
-})
+removeDir(templateDir);
 fs.unlinkSync(jsSchema);
 
 process.exit(0);
