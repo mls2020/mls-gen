@@ -36,21 +36,28 @@ context = require(jsSchema);
 // Load Templates
 const templateDir = path.join(output, './___mlsgen-template');
 if (template.toLowerCase().startsWith('http://') || template.toLowerCase().startsWith('https://')) {
-  console.log('clone template from '+ templateDir)
+  console.log('clone template from ' + templateDir)
   proc.execSync(`git clone ${template} ${templateDir}`, {
     cwd: output,
     stdio: 'inherit'
   })
 } else {
-  console.log('copy template from '+ templateDir)
-  copydir.sync(template, templateDir);
+  console.log('copy template from ' + __dirname + '/' + template)
+  copydir.sync(__dirname + '/' + template, templateDir, {
+    filter: function (stat, filepath, filename) {
+      if (stat === 'directory' && filename === 'node_modules') {
+        return false;
+      }
+      return true;
+    }
+  });
 }
 
 createCode(output, context, templateDir);
 
 console.info(`Code generated for ${name}`);
 removeDir(templateDir);
-fs.unlinkSync(jsSchema);
+//fs.unlinkSync(jsSchema);
 
 process.exit(0);
 

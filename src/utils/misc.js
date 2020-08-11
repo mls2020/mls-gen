@@ -27,7 +27,7 @@ function createCode(root, context, templateDir) {
 }
 
 function createDir(target) {
-  if (!fs.existsSync(target, { recursive: true })) fs.mkdirSync(target);
+  if (!fs.existsSync(target, { recursive: true })) fs.mkdirSync(target,{recursive:true});
 }
 
 function removeDir(dirName) {

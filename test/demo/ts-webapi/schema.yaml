@@ -1,0 +1,29 @@
+name: demo-ts-webapi
+version: 1.0.141
+template: ../../generator-ts-webapi
+plugins:
+  - ts-webapi
+types:
+  Author:
+    id: string
+    firstName: string
+    lastName: string
+  Book:
+    id: string
+    title: 'string alphanum min:3 max:30 optional'
+    author: Author
+    date: date
+crud:
+  Book: 'get, list, put, post, delete'
+proc:
+  createBooks:
+    in:
+      id: string
+      text: string
+    out: Author
+selectors:
+  authorBooks:
+    in:
+      id: string
+      name: string
+    out: Author
