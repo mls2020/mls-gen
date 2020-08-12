@@ -4,10 +4,10 @@
 _parseType = type => type === 'date' ? 'MGDate' : type;
 
 const JoiCommands = {
-  string: () => ({ fieldType: 'string' }),
-  number: () => ({ fieldType: 'number' }),
-  boolean: () => ({ fieldType: 'boolean' }),
-  date: () => ({ fieldType: 'date' }),
+  string: () => ({ fieldType: 'string', swaggerFieldType: 'string' }),
+  number: () => ({ fieldType: 'number', swaggerFieldType: 'float' }),
+  boolean: () => ({ fieldType: 'boolean', swaggerFieldType: 'boolean' }),
+  date: () => ({ fieldType: 'date', swaggerFieldType: 'string' }),
   alphanum: () => ({ alphanum: true }),
   optional: () => ({ required: false }),
   max: v => ({ max: v }),
@@ -22,10 +22,13 @@ parseType = type => {
   tokens.forEach(token => {
     const [cmd, value] = token.split(':');
     const joiCommand = JoiCommands[cmd.toLowerCase()];
-    const cmdResult = joiCommand ? joiCommand(value) : {
-      schema: 'schemaFor' + cmd,
-      fieldType: cmd
-    }
+    const cmdResult = joiCommand
+      ? joiCommand(value)
+      : {
+        schema: 'schemaFor' + cmd,
+        fieldType: cmd,
+        swaggerIsRef: true
+      }
     returnValue = { ...returnValue, ...cmdResult }
   })
   return returnValue;
@@ -99,7 +102,9 @@ makeList = (selectors) => {
       routeName: k.toLowerCase(),
       fnArgsDef: 'args: Args_' + k,
       args: makeFields(selectors[k].in),
-      result: 'Result_' + k
+      result: 'Result_' + k,
+      definition: k
+
     }
   })
 }
@@ -111,73 +116,92 @@ makeProc = (proc) => {
       fnArgsDef: 'args: Args_' + k,
       routeName: k.toLowerCase(),
       args: makeFields(proc[k].in),
-      result: 'Result_' + k
+      result: 'Result_' + k,
+      definition: k
+
     }
   })
 }
 makeCrudList = (crudList) => {
   let ret = []
   Object.keys(crudList).forEach(k => {
+    console.log('CRUD',k)
+    const item = {};
     const value = crudList[k].toLowerCase();
     if (value.indexOf('get') > -1) {
-      ret.push({
+      item.getById = ({
         verb: 'get',
         routeName: k.toLowerCase(),
         name: `get${k}ById`,
         fnArgsDef: 'id:string',
         param: { fieldName: 'id', fieldType: 'string' },
-        result: k
+        result: k,
+        definition: k
+
       })
     }
     if (value.indexOf('list') > -1) {
-      ret.push({
+      item.list = ({
         verb: 'get',
         list: true,
         fnArgsDef: '',
         routeName: k.toLowerCase(),
         name: `list${k}`,
-        result: k + "[]"
+        result: k + "[]",
+        definition: k
+
       })
     }
     if (value.indexOf('post') > -1) {
-      ret.push({
+      item.post = ({
         verb: 'post',
         routeName: k.toLowerCase(),
         fnArgsDef: 'item:' + k,
         name: `create${k}`,
         args: k,
-        result: k
+        result: k,
+        definition: k
+
       })
     }
     if (value.indexOf('put') > -1) {
-      ret.push({
+      item.put = ({
         verb: 'put',
         routeName: k.toLowerCase(),
-        fnArgsDef: 'id:string, item:'+k,
+        fnArgsDef: 'id:string, item:' + k,
         name: `update${k}`,
         param: { fieldName: 'id', fieldType: 'string' },
         args: k,
-        result: k
+        result: k,
+        definition: k
+
       })
     }
     if (value.indexOf('delete') > -1) {
-      ret.push({
+      item.delete = ({
         verb: 'delete',
         routeName: k.toLowerCase(),
         fnArgsDef: 'id:string',
         name: `delete${k}`,
         param: { fieldName: 'id', fieldType: 'string' },
-        result: 'boolean'
+        result: 'boolean',
+        definition: k
+
       })
     }
+    ret.push(item);
   })
   return ret;
 }
 
 const processConfig = (cfg) => {
+  const ver = 'v' + cfg.version.split('.')[0];
+  const apiPrefix = `/api/${ver}`;
   return {
+    ver,
+    apiPrefix,
     types: makeTypes(cfg),
-    api: makeCrudList(cfg.crud),
+    crudApi: makeCrudList(cfg.crud),
     selApi: makeList(cfg.selectors),
     procApi: makeProc(cfg.proc),
     selectors: undefined,
@@ -186,4 +210,9 @@ const processConfig = (cfg) => {
   }
 }
 
+const postProcessing = (cfg) => {
+  // Convert swagger.yaml to swagger.json
+}
+
 module.exports = processConfig
+

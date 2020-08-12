@@ -1,5 +1,5 @@
 name: demo-ts-webapi
-version: 1.0.141
+version: 1.0.191
 template: ../../generator-ts-webapi
 plugins:
   - ts-webapi
@@ -15,6 +15,7 @@ types:
     date: date
 crud:
   Book: 'get, list, put, post, delete'
+  Author: 'get, list'
 proc:
   createBooks:
     in:
